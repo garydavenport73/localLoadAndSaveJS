@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,19 +9,20 @@
 </head>
 <textarea id="textAreaContents" cols="73" rows="21"></textarea>
 <div>
-  <button onclick="loadTextFileToTextArea()">Load</button>
-  <button onclick="saveStringToTextFile(document.getElementById('textAreaContents').value)">Save</button>
+    <button onclick="loadTextFileToTextArea()">Load</button>
+    <button onclick="saveStringToTextFile(document.getElementById('textAreaContents').value)">Save</button>
 </div>
+
 <body>
     <script>
         function loadTextFileToTextArea() {
-            var fileContents = "";
-            var inputTypeIsFile = document.createElement('input');
+            let fileContents = "";
+            let inputTypeIsFile = document.createElement('input');
             inputTypeIsFile.type = "file";
-            inputTypeIsFile.addEventListener("change", function () {
-                var fileInput = inputTypeIsFile.files[0];
-                var fileReader = new FileReader();
-                fileReader.onload = function (fileLoadedEvent) {
+            inputTypeIsFile.addEventListener("change", function() {
+                let fileInput = inputTypeIsFile.files[0];
+                let fileReader = new FileReader();
+                fileReader.onload = function(fileLoadedEvent) {
                     fileContents = fileLoadedEvent.target.result;
                     document.getElementById("textAreaContents").value = fileContents;
                 };
@@ -30,21 +32,20 @@
         }
 
         function saveStringToTextFile(str1) {
-            var saveFileName = prompt("Save as:", "*.txt");
+            let saveFileName = prompt("Save as:", "*.txt");
             if (saveFileName == null) {
                 return;
-            }
-            else if (saveFileName == "") {
+            } else if (saveFileName == "") {
                 saveFileName = "default.txt";
             }
-            var blobVersionOfText = new Blob([str1], {
+            let blobOfText = new Blob([str1], {
                 type: "text/plain"
             });
-            var urlVersionOfText = window.URL.createObjectURL(blobVersionOfText);
-            var downloadLink = document.createElement("a");
+            let urlToTextBlob = window.URL.createObjectURL(blobOfText);
+            let downloadLink = document.createElement("a");
             downloadLink.style.display = "none";
             downloadLink.download = saveFileName;
-            downloadLink.href = urlVersionOfText;
+            downloadLink.href = urlToTextBlob;
             document.body.appendChild(downloadLink);
             downloadLink.click();
             downloadLink.parentElement.removeChild(downloadLink);
